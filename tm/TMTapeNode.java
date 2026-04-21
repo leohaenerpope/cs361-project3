@@ -1,5 +1,10 @@
 package tm;
 
+/**
+ * A node points left and right to other nodes, acting like a linked list.
+ * However, TM stores a head node to keep track of where it's at, so get()
+ * is still O(1) constant time.
+ */
 public class TMTapeNode {
     private TMTapeNode left;
     private TMTapeNode right;
@@ -16,6 +21,10 @@ public class TMTapeNode {
         return this.right;
     }
 
+    /**
+     * Returns the left tapeNode or a new TapeNode with value of 0 if there are no nodes to the left
+     * @return left TapeNode
+     */
     public TMTapeNode goLeft(){
         if (this.left == null) {
             this.left = new TMTapeNode(null, this, 0);
@@ -23,6 +32,10 @@ public class TMTapeNode {
         return this.left;
     }
 
+    /**
+     * Returns the right tapeNode or a new TapeNode with value of 0 if there are no nodes to the right
+     * @return right TapeNode
+     */
     public TMTapeNode goRight(){
         if (this.right == null) {
             this.right = new TMTapeNode(this, null, 0);

@@ -1,5 +1,9 @@
 package tm;
 
+/**
+ * This TMStateTransition class is a helper for storing the data
+ * for each of the state transitions.
+ */
 public class TMStateTransition {
     private int newStateLabel;
     private int write;

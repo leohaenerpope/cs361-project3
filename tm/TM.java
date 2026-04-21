@@ -3,7 +3,12 @@ package tm;
 import java.util.HashMap;
 
 /**
- * TM machine class that holdes 
+ * TM machine class that holds data, including states and the tape for a Turing machine.
+ * 
+ * Note that the tape is just a bunch of connections of TMTapeNodes, and the head variable
+ * is storing the current TapeNode that we are at during machine function.
+ * 
+ * @author Leo Haener-Pope, Lucas Coltrin
  */
 public class TM {
     private TMTapeNode head;
