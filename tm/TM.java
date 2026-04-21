@@ -45,10 +45,11 @@ public class TM {
         for (int i = 0; i < amountStates-1; i++){
             this.states.put(i, new TMState(false));
         }
-        this.states.put(amountStates, new TMState(true));
+        this.states.put(amountStates-1, new TMState(true));
 
         
         this.amountStates = amountStates;
+        this.currentStateLabel = 0;
     }
 
     /**
@@ -62,7 +63,7 @@ public class TM {
      * @return
      */
     public boolean addStateTransition(int stateLabel, int onSymbol, int newStateLabel, int write, char move){
-        if (states.containsKey(stateLabel)){
+        if (!states.containsKey(stateLabel)){
             return false;
         }
         TMStateTransition newTransition = new TMStateTransition(newStateLabel, write, move);
@@ -80,6 +81,12 @@ public class TM {
             return false;
         }
         TMStateTransition newTransition = states.get(currentStateLabel).getTransition(head.getValue());
+
+        if (newTransition == null) {
+            System.out.println("Warning! No transition found for move() call. Returning...");
+            return false;
+        }
+
         currentStateLabel = newTransition.getNewStateLabel();
         head.setValue(newTransition.getWrite());
         if (newTransition.getMove() == 'L') { // No support for S
@@ -88,6 +95,19 @@ public class TM {
             head = head.goRight();
         }
         return true;
+    }
+
+    public String toString() {
+        while (head.hasLeft()){
+            head = head.goLeft();
+        }
+        String retString = "";
+        while (head.hasRight()){
+            retString += head.getValue();
+            head = head.goRight();
+        }
+        retString += head.getValue();
+        return retString;
     }
 
 

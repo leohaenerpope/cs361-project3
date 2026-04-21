@@ -43,6 +43,13 @@ public class TMTapeNode {
         return this.right;
     }
 
+    public boolean hasLeft(){
+        return this.left != null;
+    }
+    public boolean hasRight(){
+        return this.right != null;
+    }
+
     public int getValue(){
         return this.value;
     }
