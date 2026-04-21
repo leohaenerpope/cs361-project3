@@ -18,14 +18,14 @@ public class TMTapeNode {
 
     public TMTapeNode goLeft(){
         if (this.left == null) {
-            this.left = new TMTapeNode(null, this, '0');
+            this.left = new TMTapeNode(null, this, 0);
         }
         return this.left;
     }
 
     public TMTapeNode goRight(){
         if (this.right == null) {
-            this.right = new TMTapeNode(this, null, '0');
+            this.right = new TMTapeNode(this, null, 0);
         }
         return this.right;
     }

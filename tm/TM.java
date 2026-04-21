@@ -1,9 +1,10 @@
 package tm;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.ListIterator;
 
+/**
+ * TM machine class that holdes 
+ */
 public class TM {
     private TMTapeNode head;
 
@@ -62,7 +63,6 @@ public class TM {
         TMStateTransition newTransition = new TMStateTransition(newStateLabel, write, move);
         states.get(stateLabel).addTransition(onSymbol, newTransition);
         return true;
-
     }
 
     /**
