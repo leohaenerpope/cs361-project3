@@ -13,6 +13,9 @@ import java.util.HashMap;
 public class TM {
     private TMTapeNode head;
 
+    private TMTapeNode leftmost;
+    private TMTapeNode rightmost;
+
     private HashMap<Integer, TMState> states;
 
     private int currentStateLabel;
@@ -50,6 +53,9 @@ public class TM {
         
         this.amountStates = amountStates;
         this.currentStateLabel = 0;
+
+        this.leftmost = head;
+        this.rightmost = head;
     }
 
     /**
@@ -89,25 +95,32 @@ public class TM {
 
         currentStateLabel = newTransition.getNewStateLabel();
         head.setValue(newTransition.getWrite());
-        if (newTransition.getMove() == 'L') { // No support for S
+        if (newTransition.getMove() == 'L') {
             head = head.goLeft();
         } else {
             head = head.goRight();
         }
+
+        if (!head.hasLeft())  leftmost  = head;
+        if (!head.hasRight()) rightmost = head;
+
         return true;
     }
-
+    /**
+     * Returns contents of all visited cells from leftmost to rightmost
+     * 
+     * @return a string of digits that represent visited tape cells
+     */
+    @Override
     public String toString() {
-        while (head.hasLeft()){
-            head = head.goLeft();
+        StringBuilder sb = new StringBuilder();
+        TMTapeNode current = leftmost;
+        while (current != rightmost) {
+            sb.append(current.getValue());
+            current = current.goRight();
         }
-        String retString = "";
-        while (head.hasRight()){
-            retString += head.getValue();
-            head = head.goRight();
-        }
-        retString += head.getValue();
-        return retString;
+        sb.append(current.getValue()); // include rightmost cell
+        return sb.toString();
     }
 
 
