@@ -1,0 +1,76 @@
+****************
+* Project 3 Turing Machine Simulator
+* CS361 Theory of Computation
+* April 21, 2026
+* Lucas Coltrin
+**************** 
+
+
+OVERVIEW:
+
+This program simulates a deterministic, bi-infinite Turing Machine. It reads a Turing Machine encoding that can contain an optional input string. It then runs the simulation until the machine reaches a halt state and prints the contents of the visited tape cells.
+
+INCLUDED FILES:
+
+ * TMSimulator.java - entry point, parses input file and drives simulation
+ * TM.java - represents the Turing Machine, manages tape and execution
+ * TMState.java - represents a single TM state and its transitions
+ * TMStateTransition.java - stores the data for a single transition (next state, write symbol, direction)
+ * TMTapeNode.java  - represents a single cell on the bi-infinite tape as a doubly-linked node
+
+
+
+
+COMPILING AND RUNNING:
+
+From the directory containing the tm/ package folder, compile all source files with the command:
+
+ $ javac tm/TMSimulator.java tm/TM.java tm/TMState.java tm/TMStateTransition.java tm/TMTapeNode.java
+
+Run the compiled code with the command:
+
+$ java tm.TMSimulator <inputfile>
+
+A string will be outputted containing every tape cell the machine visited.
+
+
+PROGRAM DESIGN AND IMPORTANT CONCEPTS:
+
+We divided the program into 5 distinct classes with their own function
+
+TMSimulator is the entry point and runs the actual simulation itself. It starts by reading the input file and parsing the number of states and symbols, as well as the tape from the last line. Then it calculates the number of transition lines and constructs a TM object while running through the simulation by calling move().
+
+TM sets up the tape as a doubly-linked list, as well as the states as a HashMap from integers to TMState objects. The move method is responsible for the majority of this, such as getting the transition based on current state and position of the head in the tape, as well as writing the new symbol and moving the head. TM also tracks the leftmost and rightmost tape entries to help toString properly trim and prevent any edge case issues.
+
+TMState holds the HashMap of tape symbols as integers, to TMStateTransition objects, which represents all transitions for each state.
+
+TMStateTransition stores the three components of a transition: the next state, the symbol to write, and the move direction for the read/write head.
+
+TMTapeNode represents one cell of the tape. Each node holds a value as well as its pointers to its two neighbors, as it is a doubly-linked list. If the head is moved in a direction without a node, a new one is created with a blank value. This allows the tape to be bi-infinite.
+
+Our biggest and most important design decision was choosing to use a doubly-linked list over any other data structure. We felt that because we needed the tape to be bi-infinite, a doubly-linked list best fit this. This is because it doesn't require a set allocated amount of memory, and will simply grow to fit the needs of the tape. The only real downside we could think of was that toString() would not be able to randomly access the tape, but since it only needed to go from the leftmost cell to the rightmost cell once, we figured this wouldn't be the biggest deal.
+
+
+TESTING:
+
+We used the three given test files to test our code. Both file2 and file5 are passing, but for some reason file0 won't match up to the project description. Other than that, our code looks good, and we are hoping it is either an issue with the test file, or with the specifications.
+
+We made the program handle bad input by making it output a usage message if no input file is called. There are also a couple exceptions thrown throughout to help gracefully exit and provide the user with some information. And we know we didn't need infinite loop detection, as the specification says not to worry about that.
+
+
+DISCUSSION:
+
+Our biggest troubles were proper trimming of the tape output and how to identify visited areas. We had issues with leading/trailing zeroes being removed in our first attempt at doing this. Once we figured out we needed to track the leftmost and rightmost nodes, we realized this would be much simpler than we originally thought.
+
+Using leftmost and rightmost also helped simplify our toString() quite a bit. Another thing we did was originally we had string concatenation, but since part of this assignment was optimization, we decided to try out a stringbuilder, which we weren't super confident in using, not because they are super difficult, but because we mostly use string concatenation in past projects.
+ 
+
+EXTRA CREDIT:
+
+N/A
+
+
+SOURCES:
+
+https://www.geeksforgeeks.org/java/stringbuilder-class-in-java-with-examples/
+This article was used for help learning more about stringbuilders.
