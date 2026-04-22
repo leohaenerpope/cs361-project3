@@ -4,6 +4,11 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
 
+/**
+ * Entry point for TM that reads input file and parses important information from it to build TM
+ * 
+ * @author Leo Haener-Pope, Lucas Coltrin
+ */
 public class TMSimulator {
     public static void main(String[] args) throws IOException{
         if (args.length == 0){
